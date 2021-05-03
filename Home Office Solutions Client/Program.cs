@@ -13,6 +13,7 @@ namespace Home_Office_Solutions_Client
         static void Main(string[] args)
         {
             GetstationaryItems().Wait();
+            Console.ReadLine();
         }
         private static async Task GetstationaryItems()
         {
@@ -20,19 +21,28 @@ namespace Home_Office_Solutions_Client
             client.BaseAddress = new Uri("http://localhost:43483/");
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-            HttpResponseMessage response = await client.GetAsync("api/StationaryItemsAPI");
-            if (response.IsSuccessStatusCode)
+            try
             {
-                IEnumerable<StationaryItems> statItems = await response.Content.ReadAsAsync<IEnumerable<StationaryItems>>();
-
-                foreach (StationaryItems st in statItems)
+                HttpResponseMessage response = await client.GetAsync("api/StationaryItemsAPI");
+                if (response.IsSuccessStatusCode)
                 {
-                    Console.WriteLine(st);
+                    IEnumerable<StationaryItems> statItems = await response.Content.ReadAsAsync<IEnumerable<StationaryItems>>();
+                    var sorted = statItems.OrderBy(s => s.Name);
+
+                    Console.WriteLine("\n\t Order List Desc:");
+                    foreach (StationaryItems st in sorted)
+                    {
+                        Console.WriteLine(st);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine(response.StatusCode + " Resone Phrease:" + response.ReasonPhrase);
                 }
             }
-            else
+            catch (Exception e)
             {
-                Console.WriteLine(response.StatusCode + " Resone Phrease:" + response.ReasonPhrase);
+                Console.WriteLine(e.Message);
             }
         }
 }   }
