@@ -29,7 +29,7 @@ namespace Home_Office_Solutions_Client
                     IEnumerable<StationaryItems> statItems = await response.Content.ReadAsAsync<IEnumerable<StationaryItems>>();
                     var sorted = statItems.OrderBy(s => s.Name);
 
-                    Console.WriteLine("\n\t Order List Desc:");
+                    Console.WriteLine("\t Order List By Name");
                     foreach (StationaryItems st in sorted)
                     {
                         Console.WriteLine(st);
