@@ -18,7 +18,7 @@ namespace Home_Office_Solutions_Client
         private static async Task GetstationaryItems()
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:43483/");
+            client.BaseAddress = new Uri("https://homeofficesolution.azurewebsites.net/");
             client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
             try
